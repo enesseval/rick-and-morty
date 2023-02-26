@@ -5,36 +5,47 @@ import { fetchCharacters } from "../../redux/charactersSlice";
 import Masonry from "react-masonry-css";
 import Loading from "../../components/Loading";
 import Error from "../../components/Error";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
 
 function Home() {
 	const characters = useSelector((state) => state.characters.items);
-	const isLoading = useSelector((state) => state.characters.isLoading);
+	const status = useSelector((state) => state.characters.status);
 	const error = useSelector((state) => state.characters.error);
+	const page = useSelector((state) => state.characters.page);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchCharacters());
-	}, [dispatch]);
+		if (status === "idle") {
+			dispatch(fetchCharacters());
+		}
+	}, [dispatch, status]);
 
-	if (isLoading) {
+	if (status === "loading") {
 		return <Loading />;
 	}
 
-	if (error) {
+	if (status === "failed") {
 		return <Error message={error} />;
 	}
 
 	return (
-		<div>
-			<Masonry breakpointCols={4} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
+		<div className="char_list">
+			<Masonry breakpointCols={5} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
 				{characters.map((character) => (
-					<div key={character.id}>
-						<img src={character.image} alt={character.name} className="character" />
-						<div className="char_name">{character.name}</div>
-					</div>
+					<Link to={`/detail/${character.id}`} key={character.id}>
+						{console.log(character)}
+						<div className="char_card">
+							<img src={character.image} alt={character.name} className="character" />
+							<div className="char_name">{character.name}</div>
+						</div>
+					</Link>
 				))}
 			</Masonry>
+			<Button style={{ marginBottom: 20 }} onClick={() => dispatch(fetchCharacters(page))} disabled={page === 43}>
+				Load More ({page})
+			</Button>
 		</div>
 	);
 }
