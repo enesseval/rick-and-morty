@@ -19,6 +19,20 @@ body{
     width: 50px;
 }
 
+.nav > ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.nav > ul > li{
+    margin-left: 10px;
+}
+
+.nav > ul > li > a {
+    text-decoration: none;
+    color: black;
+}
+
 .detail_char_container{
     display: flex;
     margin: 15px 0;

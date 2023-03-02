@@ -12,8 +12,6 @@ function Home() {
 	const characters = useSelector((state) => state.characters.items);
 	const status = useSelector((state) => state.characters.status);
 	const error = useSelector((state) => state.characters.error);
-	const page = useSelector((state) => state.characters.page);
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -35,17 +33,21 @@ function Home() {
 			<Masonry breakpointCols={5} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
 				{characters.map((character) => (
 					<Link to={`/detail/${character.id}`} key={character.id}>
-						{console.log(character)}
-						<div className="char_card">
+						<div className="char_card_front">
 							<img src={character.image} alt={character.name} className="character" />
 							<div className="char_name">{character.name}</div>
+						</div>
+						<div className="char_card_back">
+							<h6>Gender: {character.gender}</h6>
+							<h6>Episode: {character.episode.length}</h6>
+							<h6>Species: {character.species}</h6>
+							<h6>Status: {character.status}</h6>
+							<h6>Location: {character.location.name}</h6>
+							<h6>Origin: {character.origin.name}</h6>
 						</div>
 					</Link>
 				))}
 			</Masonry>
-			<Button style={{ marginBottom: 20 }} onClick={() => dispatch(fetchCharacters(page))} disabled={page === 43}>
-				Load More ({page})
-			</Button>
 		</div>
 	);
 }

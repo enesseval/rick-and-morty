@@ -1,18 +1,27 @@
 import "./App.css";
-
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import logo from "./images/logo.png";
 import Home from "./pages/Home";
-import Nav from "./components/Nav";
-import Detail from "./components/Detail";
+import Episodes from "./pages/Episodes";
 function App() {
 	return (
 		<>
 			<div className="container">
-				<Nav />
 				<Router>
+					<div className="nav">
+						<img className="logo" src={logo} alt="" />
+						<ul>
+							<li>
+								<Link to="/">Home</Link>
+							</li>
+							<li>
+								<Link to="/episodes">Episodes</Link>
+							</li>
+						</ul>
+					</div>
 					<Routes>
 						<Route index path="/" element={<Home />} />
-						<Route path="/detail/:char_id" element={<Detail />} />
+						<Route index path="/episodes" element={<Episodes />} />
 					</Routes>
 				</Router>
 			</div>

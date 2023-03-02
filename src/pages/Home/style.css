@@ -1,6 +1,7 @@
 .my-masonry-grid {
     display: flex;
     margin-left: -20px; /* gutter size offset */
+    width: 100%;
   }
   .my-masonry-grid_column {
     border-left: 20px solid transparent;
@@ -18,11 +19,15 @@
     display: block;
     padding: 20px;
     text-decoration: none;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s;
   }
 
   .my-masonry-grid_column > a:hover{
     color: #4592AF;
     text-decoration: underline;    
+    transform: rotateY(180deg);
   }
 
   .character{
@@ -44,12 +49,28 @@
     border-bottom: 1px solid #4592AF;
   }
 
-  .char_card{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+ .char_card_front, .char_card_back{
+    backface-visibility: hidden;
+ }
+
+ .char_card_front{
+    text-align: center;;
+ }
+
+  .char_card_front img{
+    border-radius: 5px;
   }
 
-  .char_card img{
+  .char_card_back{
+    text-align: center;
+    background-color: #f9f9f9;
     border-radius: 5px;
+    border: 0.5px solid gray;
+    transform: rotateY(180deg);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
   }
